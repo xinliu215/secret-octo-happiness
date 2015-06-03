@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Calender Dates</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @calender_dates.each do |calender_date| %>
+      <tr>
+        <td><%= link_to 'Show', calender_date %></td>
+        <td><%= link_to 'Edit', edit_calender_date_path(calender_date) %></td>
+        <td><%= link_to 'Destroy', calender_date, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Calender date', new_calender_date_path %>

@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Holidays</h1>
+
+<table class = "table table-striped"> 
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @holiday_date.each do |holiday_date| %>
+      <tr>
+        <td><%= @holidays.find(holiday_date.holiday_id).name%></td>
+        <td>Date: <%= @calender_dates.find(holiday_date.calender_date_id).calender_date %></td>
+        <td>Country: <%= @countries.find(holiday_date.country_id).country %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
