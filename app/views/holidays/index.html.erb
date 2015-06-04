@@ -1,13 +1,11 @@
 <p id="notice"><%= notice %></p>
-
-<h1>Listing Holidays</h1>
+<h1>Listing Holidays for <%= @countries.find(@holiday_date.first.country_id).country %> 
+  in <%= @calender_dates.find(@holiday_date.first.calender_date_id).calender_date.year %></h1>
 
 <%= form_tag holidays_path, :method => :get, class: 'get_country'  do %>
-  <%= select_tag "set_country", options_from_collection_for_select(@countries, 'id', 'country'), 
-  onchange: 'this.form.submit()' %>
-  <%= select_tag "set_year", options_for_select((Date.today.year .. (Date.today.year+30)), selected: "#{Date.today.year}") %>
+  <%= select_tag "set_country", options_from_collection_for_select(@countries, 'id', 'country', selected: params[:set_country])%>
+  <%= select_tag "set_year", options_for_select((Date.today.year .. (Date.today.year+30)), selected: params[:set_year]) %>
   <%= submit_tag 'submit' %>
-  <%= javascript_tag "$('.get_country input').hide()" %>
 
 <% end %>
 

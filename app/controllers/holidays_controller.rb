@@ -4,15 +4,32 @@ class HolidaysController < ApplicationController
   # GET /holidays
   # GET /holidays.json
   def index
-    if params[:set_country]
-      ct = params[:set_country]
-      @holiday_date = HolidayDate.where("country_id = ?", ct.to_i)
     @holidays = Holiday.all
     @calender_dates = CalenderDate.all
-    #@holiday_date = HolidayDate.all
-    @countries = Country.all
-  end
+    @countries = Country.all   
 
+    if params[:set_country] && params[:set_year]
+      ct = params[:set_country]
+      yr = params[:set_year]
+      dt = DateTime.new(yr.to_i)
+      boy = dt.beginning_of_year.to_date
+      eoy = dt.end_of_year.to_date
+      calender = CalenderDate.where("calender_date >= ? and calender_date <= ?", boy, eoy).all
+      @holiday_date = HolidayDate.where("country_id = ? and calender_date_id >= ? and calender_date_id <= ?", ct.to_i, calender.first.id, calender.last.id)
+    else
+      #@holiday_date = HolidayDate.find_by_sql("select * " +
+      #                                        "FROM holiday_dates h " + 
+      #                                        "LEFT JOIN calender_dates c " +
+      #                                        "ON h.country_id = 2 " +
+      #                                        "and extract(year from c.calender_date) = 2015 " +
+      #                                        "and c.id = h.calender_date_id")
+      dt = DateTime.new(2015)
+      boy = dt.beginning_of_year.to_date
+      eoy = dt.end_of_year.to_date
+      calender = CalenderDate.where("calender_date >= ? and calender_date <= ?", boy, eoy).all
+      @holiday_date = HolidayDate.where("country_id = 2 and calender_date_id >= ? and calender_date_id <= ?", calender.first.id, calender.last.id)
+        
+    end
   end
 
   # GET /holidays/1
