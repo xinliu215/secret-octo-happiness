@@ -4,10 +4,14 @@ class HolidaysController < ApplicationController
   # GET /holidays
   # GET /holidays.json
   def index
+    if params[:set_country]
+      ct = params[:set_country]
+      @holiday_date = HolidayDate.where("country_id = ?", ct.to_i)
     @holidays = Holiday.all
     @calender_dates = CalenderDate.all
-    @holiday_date = HolidayDate.all
+    #@holiday_date = HolidayDate.all
     @countries = Country.all
+  end
 
   end
 

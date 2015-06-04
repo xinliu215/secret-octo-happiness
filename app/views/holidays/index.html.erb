@@ -2,6 +2,15 @@
 
 <h1>Listing Holidays</h1>
 
+<%= form_tag holidays_path, :method => :get, class: 'get_country'  do %>
+  <%= select_tag "set_country", options_from_collection_for_select(@countries, 'id', 'country'), 
+  onchange: 'this.form.submit()' %>
+  <%= select_tag "set_year", options_for_select((Date.today.year .. (Date.today.year+30)), selected: "#{Date.today.year}") %>
+  <%= submit_tag 'submit' %>
+  <%= javascript_tag "$('.get_country input').hide()" %>
+
+<% end %>
+
 <table class = "table table-striped"> 
   <thead>
     <tr>
